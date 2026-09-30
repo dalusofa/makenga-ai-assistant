@@ -21,7 +21,7 @@
     .header {
       background: linear-gradient(135deg, #172554, #2563eb);
       color: white;
-      padding: 25px 18px;
+      padding: 28px 18px;
       text-align: center;
     }
 
@@ -42,7 +42,8 @@
       padding: 15px;
     }
 
-    .welcome {
+    .welcome,
+    .chat {
       background: white;
       border-radius: 18px;
       padding: 22px;
@@ -72,12 +73,6 @@
       border-radius: 15px;
       padding: 18px;
       cursor: pointer;
-      transition: 0.2s;
-    }
-
-    .service:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(0,0,0,0.08);
     }
 
     .service h3 {
@@ -92,10 +87,6 @@
 
     .chat {
       margin-top: 20px;
-      background: white;
-      border-radius: 18px;
-      padding: 18px;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.08);
     }
 
     .messages {
@@ -127,4 +118,150 @@
     .input-area input {
       flex: 1;
       padding: 14px;
-      border: 1
+      border: 1px solid #cbd5e1;
+      border-radius: 12px;
+      outline: none;
+      font-size: 15px;
+    }
+
+    .input-area button {
+      padding: 14px 20px;
+      border: none;
+      border-radius: 12px;
+      background: #2563eb;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .input-area button:hover {
+      background: #1d4ed8;
+    }
+
+    footer {
+      text-align: center;
+      padding: 25px;
+      color: #64748b;
+      font-size: 13px;
+    }
+
+    @media (max-width: 500px) {
+      .services {
+        grid-template-columns: 1fr;
+      }
+
+      .input-area {
+        flex-direction: column;
+      }
+
+      .input-area button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="header">
+    <div class="logo">🤖 Makenga AI Assistant</div>
+    <div class="tagline">Your smart AI assistant</div>
+  </div>
+
+  <div class="container">
+
+    <div class="welcome">
+      <h1>Karibu Makenga AI Assistant 👋</h1>
+      <p>
+        Msaidizi wako wa akili kwa kujifunza, kuandika,
+        kutafsiri, Biblia, biashara na maswali mbalimbali.
+      </p>
+    </div>
+
+    <div class="services">
+
+      <div class="service" onclick="setQuestion('Nisaidie kuelewa Biblia')">
+        <h3>📖 Bible & Studies</h3>
+        <p>Jifunze Biblia na masomo ya Kikristo.</p>
+      </div>
+
+      <div class="service" onclick="setQuestion('Nisaidie kuandika ujumbe')">
+        <h3>✍️ Writing Assistant</h3>
+        <p>Andika ujumbe, barua na maandishi mbalimbali.</p>
+      </div>
+
+      <div class="service" onclick="setQuestion('Tafsiri hii kwa Kiingereza')">
+        <h3>🌍 Translation</h3>
+        <p>Tafsiri maandishi kati ya lugha mbalimbali.</p>
+      </div>
+
+      <div class="service" onclick="setQuestion('Nipe wazo la biashara')">
+        <h3>💡 Business Ideas</h3>
+        <p>Pata mawazo ya biashara na fursa.</p>
+      </div>
+
+    </div>
+
+    <div class="chat">
+
+      <div class="messages" id="messages">
+        <div class="message ai">
+          🤖 Habari! Mimi ni Makenga AI Assistant.
+          Niandikie swali lako hapa chini.
+        </div>
+      </div>
+
+      <div class="input-area">
+        <input
+          type="text"
+          id="question"
+          placeholder="Andika swali lako hapa..."
+          onkeydown="if(event.key === 'Enter') sendQuestion()"
+        >
+
+        <button onclick="sendQuestion()">Tuma</button>
+      </div>
+
+    </div>
+
+  </div>
+
+  <footer>
+    © 2026 Makenga AI Assistant
+  </footer>
+
+  <script>
+    function setQuestion(text) {
+      document.getElementById("question").value = text;
+      document.getElementById("question").focus();
+    }
+
+    function sendQuestion() {
+      const input = document.getElementById("question");
+      const messages = document.getElementById("messages");
+      const question = input.value.trim();
+
+      if (question === "") {
+        return;
+      }
+
+      const userMessage = document.createElement("div");
+      userMessage.className = "message user";
+      userMessage.textContent = question;
+      messages.appendChild(userMessage);
+
+      input.value = "";
+
+      const aiMessage = document.createElement("div");
+      aiMessage.className = "message ai";
+      aiMessage.textContent =
+        "🤖 Nimepokea swali lako. AI halisi itaunganishwa hapa katika hatua inayofuata.";
+
+      messages.appendChild(aiMessage);
+
+      messages.scrollTop = messages.scrollHeight;
+    }
+  </script>
+
+</body>
+</html>
